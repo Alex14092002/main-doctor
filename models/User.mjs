@@ -1,13 +1,4 @@
 import mongoose from "mongoose";
-
-const imageSchema = new mongoose.Schema(
-  {
-    linkImg: {
-      type: String,
-      required: true,
-  },
-  }
-)
 const userSchema = new mongoose.Schema(
     {
       email: {
@@ -43,6 +34,9 @@ const userSchema = new mongoose.Schema(
       admin: {
         type: Boolean,
         default: false,
+      },
+      avatar: {
+        type: String, // Lưu đường dẫn hoặc tên tệp ảnh
       },
     },
     { timestamps: true }

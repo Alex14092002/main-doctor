@@ -3,6 +3,8 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose';
 import authRoute from './routes/authRoute.mjs'
+import userRoute from './routes/userRoute.mjs'
+
 
 const app = express();
 const port = 8000;
@@ -10,6 +12,8 @@ dotenv.config()
 
 app.use(cors())
 app.use(express.json())
+
+
 
 mongoose.connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
@@ -26,5 +30,7 @@ mongoose.connect(process.env.MONGODB_URL, {
 
 
 app.use('/api/auth' , authRoute)  
+app.use('/api/user' ,userRoute)
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
