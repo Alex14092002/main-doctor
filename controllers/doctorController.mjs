@@ -7,7 +7,6 @@ const doctorController = {
 
     try {
       const { symptom, medicineName } = req.body; // Đảm bảo rằng bạn có tên thuốc từ req.body
-
       // Tìm thông tin thuốc dựa trên tên
       const selectedMedicine = await Medicine.findOne({ name: medicineName });
 

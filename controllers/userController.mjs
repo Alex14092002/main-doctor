@@ -49,6 +49,7 @@ const userController = {
       res.status(500).json(error);
     }
   },
+  
   registerMedical: async (req, res) => {
     try {
       const idPatient = req.params.idPatient; // Lấy idPatient từ phần params của URL
@@ -65,7 +66,6 @@ const userController = {
       res.status(500).json({ message: error });
     } 
   }
-  
    
 };
 export default userController;

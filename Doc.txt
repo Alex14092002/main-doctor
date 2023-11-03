@@ -1,0 +1,21 @@
+http://localhost:8000/api/auth/login   /// login
+
+http://localhost:8000/api/auth/login   // register
+
+http://localhost:8000/api/user        // hiển thị danh sách người dùng
+
+
+http://localhost:8000/api/medicine/add   /// thêm loại thuốc
+
+
+
+http://localhost:8000/api/medicine/delete/6544648128233d4996e45646   /// xoá thuốc
+
+
+
+http://localhost:8000/api/medicine/update/654464e928233d4996e4564a   // cập  nhật thuốc
+
+
+
+
+http://localhost:8000/api/doctor/prescription/654482086bfe1336c04f2982    // y bạ
