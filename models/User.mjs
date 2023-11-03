@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const userSchema = new mongoose.Schema(
     {
       email: {
@@ -35,6 +36,7 @@ const userSchema = new mongoose.Schema(
         type: Boolean,
         default: false,
       },
+    
       avatar: {
         type: String, // Lưu đường dẫn hoặc tên tệp ảnh
       },

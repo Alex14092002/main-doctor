@@ -1,6 +1,6 @@
-
 import User from "../models/User.mjs";
-import bcrypt from 'bcrypt' 
+import bcrypt from "bcrypt";
+import Medical from "../models/Medical.mjs";
 const userController = {
   getAllusers: async (req, res) => {
     try {
@@ -29,7 +29,7 @@ const userController = {
     }
   },
   updateUser: async (req, res) => {
-    const salt = await bcrypt.genSalt(10)
+    const salt = await bcrypt.genSalt(10);
     try {
       // Kiểm tra nếu trường 'password' được cập nhật
       if (req.body.password) {
@@ -37,19 +37,35 @@ const userController = {
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
         req.body.password = hashedPassword;
       }
-  
-    
+
       const updatedUser = await User.findByIdAndUpdate(
         req.params.id,
         req.body,
         { new: true }
       );
-  
+
       res.status(200).json(updatedUser);
     } catch (error) {
       res.status(500).json(error);
     }
+  },
+  registerMedical: async (req, res) => {
+    try {
+      const idPatient = req.params.idPatient; // Lấy idPatient từ phần params của URL
+      const { symptom } = req.body;
+      
+      const newMedical = new Medical({
+        idPatient: idPatient,
+        symptom: symptom
+      });
+      
+      const medical = await newMedical.save();
+      res.status(200).json(medical);
+    } catch (error) {
+      res.status(500).json({ message: error });
+    } 
   }
-
+  
+   
 };
-export default userController
+export default userController;

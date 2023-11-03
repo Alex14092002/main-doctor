@@ -1,15 +1,16 @@
 import multer from "multer";
-import path from "path";
-import sanitizeFilename from "sanitize-filename"; // Import thư viện
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import path from 'path'
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "../uploads"); // Thư mục lưu trữ ảnh
-  },
-  filename: (req, file, cb) => {
-    const sanitizedFilename = sanitizeFilename(file.originalname);
-    cb(null, sanitizedFilename);
-  },
-});
+    destination: (req, file, cb) => {
+      cb(null, 'uploads/'); // Sử dụng đường dẫn tương đối
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  });
 
-export const upload = multer({ storage: storage });
+const upload = multer({ storage: storage });
+export default upload;

@@ -12,5 +12,7 @@ router.delete('/delete/:id', middlewareController.verifyTokenAdmin, userControll
 router.get('/detail/:id',middlewareController.verifyTokenmy, userController.getOneuser)
 router.patch('/update/:id' , middlewareController.verifyTokenAdmin , userController.updateUser)
 
+router.post('/medical/:idPatient' ,userController.registerMedical)
+
 export default router
 

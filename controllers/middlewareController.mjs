@@ -5,7 +5,7 @@ const middlewareController = {
         const token = req.headers.token;
         if(token){
             
-            middlewareController.verify(token , process.env.JWT_ACCESS_KEY, (err , user)=>{
+            jsonwebtoken.verify(token , process.env.JWT_ACCESS_KEY, (err , user)=>{
                 if(err){
                     res.status(403).json('token chưa chính xác')
                 }
