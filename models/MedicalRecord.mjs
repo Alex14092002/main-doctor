@@ -6,6 +6,9 @@ const MedicalRecordSchema = mongoose.Schema(
       type: String,
       require: true,
     },
+    idDoctor : {
+      type: String,
+    },
     symptom: {
       type: String,
       require: true,

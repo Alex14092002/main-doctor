@@ -4,7 +4,7 @@ import Medicine from "../models/Medical.mjs"; // Import MedicineSchema
 const doctorController = {
   prescription: async (req, res) => {
     const idPatient = req.params.id;
-
+    const idDoctor = req.params.id
     try {
       const { symptom, medicineName } = req.body; // Đảm bảo rằng bạn có tên thuốc từ req.body
       // Tìm thông tin thuốc dựa trên tên
@@ -16,6 +16,7 @@ const doctorController = {
 
       // Tạo một bản ghi mới trong medicalRecord và gán thông tin thuốc
       const newRecord = new MedicalRecord({
+        idDoctor : idDoctor,
         idPatient: idPatient,
         symptom: symptom,
         medicine: selectedMedicine._id, // Gán ID của thuốc từ MedicineSchema
