@@ -22,6 +22,7 @@ const medicineController = {
               res.status(200).json(newMedicine)
         } catch (error) {
             res.status(500).json(error)
+            console.error(error)
         }
     },
     getAllmedicine : async(req , res) => {

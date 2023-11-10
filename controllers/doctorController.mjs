@@ -1,14 +1,14 @@
-import MedicalRecord from "../models/MedicalRecord.mjs";
 import Medicine from "../models/Medical.mjs"; // Import MedicineSchema
+import Medical from "../models/Medical.mjs"; // Import MedicalSchema
 import PayPal from "../models/PayPal.mjs"; // Import PayPalSchema (nếu có)
 
 const doctorController = {
   prescription: async (req, res) => {
     const idPatient = req.params.id;
     const idDoctor = req.params.id;
-    const idNurse = req.body.idNurse;
+
     try {
-      const { symptom, medicineName } = req.body; // Đảm bảo rằng bạn có tên thuốc từ req.body
+      const { symptom, medicineName } = req.body; // Đảm bảo rằng bạn có tên thuốc và triệu chứng từ req.body
       // Tìm thông tin thuốc dựa trên tên
       const selectedMedicine = await Medicine.findOne({ name: medicineName });
 
@@ -16,20 +16,23 @@ const doctorController = {
         return res.status(404).json({ message: "Không tìm thấy thuốc" });
       }
 
-      // Tạo một bản ghi mới trong medicalRecord và gán thông tin thuốc
-      const newRecord = new MedicalRecord({
-        idDoctor: idDoctor,
-        idNurse : idNurse,
-        idPatient: idPatient,
-        symptom: symptom,
-        medicine: selectedMedicine._id, // Gán ID của thuốc từ MedicineSchema
-      });
+      // Tìm thông tin bệnh nhân qua mô hình Medical (có trạng thái true)
+      const medicalInfo = await Medical.findOne({ idPatient: idPatient, status: true });
 
-      // Lưu bản ghi medicalRecord
-      const savedRecord = await newRecord.save();
+      if (!medicalInfo) {
+        return res.status(404).json({ message: "Không tìm thấy thông tin bệnh nhân" });
+      }
 
-      // Tìm giá của thuốc từ bảng PayPal
-      if (PayPal) { // Kiểm tra nếu bạn đã import PayPalSchema
+      // Thêm thông tin đơn thuốc trực tiếp vào schema của bệnh nhân
+      medicalInfo.idDoctor = idDoctor;
+      medicalInfo.symptom = symptom;
+      medicalInfo.medicine = selectedMedicine._id; // Gán ID của thuốc từ MedicineSchema
+
+      // Lưu thông tin bệnh nhân
+      const updatedMedicalInfo = await medicalInfo.save();
+
+      // Tìm giá của thuốc từ bảng PayPal (nếu có)
+      if (PayPal) {
         const paypalInfo = await PayPal.findOne({ medicine: selectedMedicine._id });
         if (paypalInfo) {
           // Lấy giá từ paypalInfo
@@ -37,7 +40,7 @@ const doctorController = {
 
           // Tạo một đối tượng response để trả về kết quả với giá của thuốc
           const response = {
-            ...savedRecord.toObject(),
+            ...updatedMedicalInfo.toObject(),
             medicinePrice: medicinePrice,
           };
 
@@ -46,7 +49,7 @@ const doctorController = {
       }
 
       // Nếu không tìm thấy thông tin giá, trả về kết quả mà không có giá
-      res.status(200).json(savedRecord);
+      res.status(200).json(updatedMedicalInfo);
     } catch (error) {
       res.status(500).json({ message: error });
     }

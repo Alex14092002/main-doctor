@@ -4,13 +4,14 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get('/' , middlewareController.verifyTokenAdmin , userController.getAllusers)
+router.get('/' , userController.getAllusers)
+router.get('/:id' , userController.getOneuser)
 
-router.delete('/delete/:id', middlewareController.verifyTokenAdmin, userController.deleteUser)
+router.delete('/delete/:id',  userController.deleteUser)
 
 
 router.get('/detail/:id',middlewareController.verifyTokenmy, userController.getOneuser)
-router.patch('/update/:id' , middlewareController.verifyTokenAdmin , userController.updateUser)
+router.patch('/update/:id' ,  userController.updateUser)
 
 router.post('/medical/:idPatient' ,userController.registerMedical)
 

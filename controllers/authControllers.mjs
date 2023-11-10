@@ -17,7 +17,6 @@ const authController = {
         // Nếu có lỗi, trả về danh sách lỗi cụ thể
         return res.status(400).json({ message });
       }
-
       const salt = await bcrypt.genSalt(10);
       const hashed = await bcrypt.hash(req.body.password, salt);
       const newUser = new User({
