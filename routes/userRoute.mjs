@@ -10,7 +10,6 @@ router.get('/:id' , userController.getOneuser)
 router.delete('/delete/:id',  userController.deleteUser)
 
 
-router.get('/detail/:id',middlewareController.verifyTokenmy, userController.getOneuser)
 router.patch('/update/:id' ,  userController.updateUser)
 
 router.post('/medical/:idPatient' ,userController.registerMedical)

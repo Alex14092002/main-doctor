@@ -44,7 +44,7 @@ const medicineController = {
       getOnemedicine: async (req, res) => {
         try {
           const medicine = await MedicineSchema.findById(req.params.id);
-          res.status(200).json(user);
+          res.status(200).json(medicine);
         } catch (error) {
           res.status(500).json(error);
         }
