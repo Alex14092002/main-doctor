@@ -50,26 +50,35 @@ const medicineController = {
         }
       },
       updateMediciner: async (req, res) => {
-       
         try {
             const medicineId = req.params.id;
             const updateMedicine = {
-                name : req.body.name,
-                price : req.body.price,
-                image : req.file.path,
-                status : false
+                name: req.body.name,
+                price: req.body.price,
+                status: false
+            };
+    
+            // Kiểm tra xem một file mới có được tải lên hay không
+            if (req.file) {
+                updateMedicine.image = req.file.path;
             }
-
-            const medicineToupdate = await MedicineSchema.findById(medicineId)
-            if(!medicineToupdate){
+    
+            const medicineToUpdate = await MedicineSchema.findById(medicineId);
+    
+            if (!medicineToUpdate) {
                 return res.status(404).json({ message: "Không tìm thấy loại thuốc" });
-            } 
-            Object.assign(medicineToupdate, updateMedicine);
-            const updatedMedicine = await medicineToupdate.save();
+            }
+    
+            // Cập nhật các trường khác
+            Object.assign(medicineToUpdate, updateMedicine);
+    
+            // Cập nhật loại thuốc
+            const updatedMedicine = await medicineToUpdate.save();
             res.status(200).json(updatedMedicine);
         } catch (error) {
-          res.status(500).json(error);
+            res.status(500).json(error);
         }
-      }
+    }
+    
 }
 export default medicineController;
