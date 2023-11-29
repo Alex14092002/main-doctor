@@ -20,6 +20,9 @@ const MedicalSchema = mongoose.Schema({
     idNurse: {
         type: String, // Thêm trường idNurse để lưu ID của y tá
     },
+    namePatient : {
+        type: String,
+    },
     medicine: [
         {
             type: mongoose.Schema.Types.ObjectId,

@@ -57,7 +57,10 @@ const userController = {
       
       const newMedical = new Medical({
         idPatient: idPatient,
-        symptom: symptom
+        namePatient : req.body.namePatient,
+        totalBill : req.body.totalBill,
+        idDoctor : req.body.idDoctor,
+        symptom:  req.body.symptom
       });
       
       const medical = await newMedical.save();
@@ -65,7 +68,8 @@ const userController = {
     } catch (error) {
       res.status(500).json({ message: error });
     } 
-  }
+  },
+
    
 };
 export default userController;

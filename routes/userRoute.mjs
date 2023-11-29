@@ -6,12 +6,8 @@ const router = Router();
 
 router.get('/' , userController.getAllusers)
 router.get('/:id' , userController.getOneuser)
-
 router.delete('/delete/:id',  userController.deleteUser)
-
-
 router.patch('/update/:id' ,  userController.updateUser)
-
 router.post('/medical/:idPatient' ,userController.registerMedical)
 
 export default router

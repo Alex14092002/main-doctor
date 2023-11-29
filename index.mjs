@@ -7,6 +7,8 @@ import userRoute from './routes/userRoute.mjs'
 import medicineRoute from './routes/Medicine.mjs'
 import nurseRoute from './routes/nurseRoute.mjs'
 import doctorRoute from './routes/doctorRoute.mjs'
+import VNpayRoute from './routes/VNpayRoute.mjs'
+import medicalRoute from './routes/Medicine.mjs'
 const app = express();
 const port = 8000;
 dotenv.config()
@@ -35,4 +37,6 @@ app.use('/api/user' ,userRoute)
 app.use('/api/medicine' , medicineRoute)
 app.use('/api/nurse', nurseRoute)
 app.use('/api/doctor' ,doctorRoute)
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.use('/api/vnpay' , VNpayRoute)
+app.use('/api/medical' , medicalRoute)
+app.listen(port , '0.0.0.0' , () => console.log(`Example app listening on port ${port}!`));

@@ -1,6 +1,9 @@
-import Medicine from "../models/Medical.mjs"; // Import MedicineSchema
+import bcrypt from "bcrypt";
+import Medicine from "../models/Medicine.mjs"; // Import MedicineSchema
 import Medical from "../models/Medical.mjs"; // Import MedicalSchema
 import PayPal from "../models/PayPal.mjs"; // Import PayPalSchema (nếu có)
+import User from "../models/User.mjs";
+
 
 const doctorController = {
   prescription: async (req, res) => {
@@ -51,6 +54,37 @@ const doctorController = {
       // Nếu không tìm thấy thông tin giá, trả về kết quả mà không có giá
       res.status(200).json(updatedMedicalInfo);
     } catch (error) {
+      res.status(500).json({ message: error });
+    }
+  },
+  registerDoctor: async (req, res) => {
+    try {
+      const message = [];
+      const existingUser = await User.findOne({
+        $or: [{ username: req.body.username }],
+      });
+      if (existingUser) {
+        message.push("Tên người dùng hoặc số điện thoại đã tồn tại.");
+      }
+      if (message.length > 0) {
+        return res.status(400).json({ message });
+      }
+      const salt = await bcrypt.genSalt(10);
+      const hashed = await bcrypt.hash(req.body.password, salt);
+      
+      const newUser = new User({
+        email: req.body.email,
+        username: req.body.username,
+        password: hashed,
+        phone: req.body.phone,
+        role: 'doctor',
+        avatar: req.file.path, 
+      });
+      const user = await newUser.save();
+      res.status(200).json(user);
+    
+    } catch (error) {
+      console.error(error);
       res.status(500).json({ message: error });
     }
   },
