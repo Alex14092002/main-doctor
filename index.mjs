@@ -8,7 +8,7 @@ import medicineRoute from './routes/Medicine.mjs'
 import nurseRoute from './routes/nurseRoute.mjs'
 import doctorRoute from './routes/doctorRoute.mjs'
 import VNpayRoute from './routes/VNpayRoute.mjs'
-import medicalRoute from './routes/Medicine.mjs'
+import medicalRoute from './routes/medicalRoute.mjs'
 const app = express();
 const port = 8000;
 dotenv.config()

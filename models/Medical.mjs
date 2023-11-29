@@ -1,39 +1,53 @@
 import mongoose from "mongoose";
 
-const MedicalSchema = mongoose.Schema({
+const MedicalSchema = mongoose.Schema(
+  {
     idPatient: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     symptom: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     status: {
-        type: Boolean,
-        default: false,
-        required: true
+      type: Boolean,
+      default: false,
+      required: true,
     },
     idDoctor: {
-        type: String, // Thêm trường idDoctor để lưu ID của bác sĩ
+      type: String,
     },
     idNurse: {
-        type: String, // Thêm trường idNurse để lưu ID của y tá
+      type: String,
     },
-    namePatient : {
-        type: String,
+    namePatient: {
+      type: String,
     },
     medicine: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Medicine', // Thêm một mảng để lưu ID của các thuốc
+      {
+        name: {
+          type: String,
+        },
+        price: {
+          type: Number,
+        },
+        quantity : {
+            type: Number,
         }
+      },
     ],
+    diagnostic: {
+      type: String,
+    },
     totalBill: {
-        type: Number, // Thêm trường tổng tiền đơn thuốc
-    }
-},
-{ timestamps: true }
+      type: Number,
+    },
+    advice: {
+      type: String,
+    },
+  },
+  { timestamps: true }
 );
 
-export default mongoose.model('Medical', MedicalSchema);
+export default mongoose.model("Medical", MedicalSchema);

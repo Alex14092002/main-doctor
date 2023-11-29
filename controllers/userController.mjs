@@ -28,6 +28,7 @@ const userController = {
       res.status(500).json(error);
     }
   },
+  
   updateUser: async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     try {
@@ -69,7 +70,5 @@ const userController = {
       res.status(500).json({ message: error });
     } 
   },
-
-   
 };
 export default userController;
